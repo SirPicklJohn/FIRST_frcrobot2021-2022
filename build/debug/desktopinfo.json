@@ -1,0 +1,13 @@
+[
+  {
+    "name": "playingaround (in project playingaround)",
+    "file": "/home/amp/Desktop/2021 FRC ROBOT CODING/playingaround/build/libs/playingaround.jar",
+    "extensions": [
+      "/home/amp/Desktop/2021 FRC ROBOT CODING/playingaround/build/tmp/expandedArchives/halsim_gui-2021.3.1-linuxx86-64.zip_b5d449d10e21dd5e8f65b716bd40d034/linux/x86-64/shared/libhalsim_gui.so",
+      "/home/amp/Desktop/2021 FRC ROBOT CODING/playingaround/build/tmp/expandedArchives/halsim_ds_socket-2021.3.1-linuxx86-64.zip_03d30014afc411a84ab76505c559f69e/linux/x86-64/shared/libhalsim_ds_socket.so"
+    ],
+    "env": {},
+    "librarydir": "/home/amp/Desktop/2021 FRC ROBOT CODING/playingaround/build/tmp/jniExtractDir",
+    "mainclass": "frc.robot.Main"
+  }
+]
