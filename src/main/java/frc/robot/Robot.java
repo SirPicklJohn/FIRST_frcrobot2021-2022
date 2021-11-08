@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
   JoystickButton myButton;
 
   ////MOTOR DECLARATION////
-  PWMTalonFX m_frontleft = new PWMTalonFX(1);
+  PWMTalonFX m_frontleft = new PWMTalonFX(1); //change the motors when you figure out what you're using
   PWMTalonFX m_backleft = new PWMTalonFX(2);
   SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontleft, m_backleft);
 
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
   DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right); //THE DRIVEBASE
   /////////////////////////
   
-  DifferentialDrivetrainSim m_driveSim;
+  DifferentialDrivetrainSim m_driveSim; //for simulation and testing (had to initialize here)
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -95,8 +95,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     ////////initialization commands////////
 
-    //RobotDriveBase.setDeadband(.1); ---Understand why you can't do this? You need to create a robotdrivebase object first
-    m_drive.setDeadband(.1); //bingo^ - joystick axis positions below .08 will not be registered
+    //RobotDriveBase.setDeadband(.1); ---Understand why you can't do this? You need to create a robotdrivebase object first. Basic Java
+    m_drive.setDeadband(.1); //bingo^ - joystick axis positions below .1 will not be registered
     
     ///////////JOYSTICK/XBOX CONTROLLER//////////
     myStick = new Joystick(0);
@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-  
+  //For general things the robot needs to repeat, no matter the mode (teleop, autonomous, test, etc.)?
 
   }
 
@@ -151,9 +151,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_drive.arcadeDrive(-myStick.getY(), myStick.getX());
+    m_drive.arcadeDrive(-myStick.getY(), myStick.getX()); //congrats the robot now drives
 
-     
 
   }
 
@@ -163,7 +162,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    //playnoise("I CAN'T FEEL MY LEGS", maxvolume());
+}
 
   /** This function is called once when test mode is enabled. */
   @Override
@@ -179,14 +180,15 @@ public class Robot extends TimedRobot {
 
     ////DRIVEBASE SIMULATION////////
   DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
-    //.DifferentialDrivetrainSim(DCMotor driveMotor, double gearing, double jKgMetersSquared, double massKg, double wheelRadiusMeters, double trackWidthMeters, Matrix<N7, N1> measurementStdDevs)
+    //KEY: .DifferentialDrivetrainSim(DCMotor driveMotor, double gearing, double jKgMetersSquared, double massKg, double wheelRadiusMeters, double trackWidthMeters, Matrix<N7, N1> measurementStdDevs)
     DCMotor.getNEO(2),       // 2 NEO motors on each side of the drivetrain.
     7.29,                    // 7.29:1 gearing reduction.
     7.5,                     // MOI of 7.5 kg m^2 (from CAD model).
     60.0,                    // The mass of the robot is 60 kg.
     Units.inchesToMeters(3), // The robot uses 3" radius wheels.
     0.7112,                  // The track width is 0.7112 meters.
-  
+    //^^measurements taken from some example robot online^^//
+
     // The standard deviations for measurement noise:
     // x and y:          0.001 m
     // heading:          0.001 rad
@@ -212,6 +214,8 @@ public class Robot extends TimedRobot {
     // subsystem in a separate thread or have changed the nominal timestep
     // of TimedRobot, this value needs to match it.
     m_driveSim.update(0.02);
+
+    ////figure out how to use encoders and the below part and hopefully this will work/can be used to simulate a playing field and the robot
 
     // Update all of our sensors.
     m_leftEncoderSim.setDistance(m_driveSim.getLeftPositionMeters());
